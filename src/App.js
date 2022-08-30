@@ -7,21 +7,13 @@ import ErrorMessage from "./ErrorMessage";
 import Container from "./Container";
 
 class App extends React.Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		weatherLocation: "",
-	// 		showWeather: false,
-	// 	};
-	// 	this.onFormSubmitHandler = this.onFormSubmitHandler.bind(this);
-	// }
-
 	state = {
 		weatherLocation: "",
 		showWeather: false,
 		showError: false,
+		inputValue: "",
 	};
-
+	debugger;
 	APICall = async () => {
 		try {
 			const apiKey = "b07ce01cf98a75428f9f86fbce911aa4";
@@ -32,7 +24,6 @@ class App extends React.Component {
 			if (!request.ok) {
 				this.setState({ ...this.state, showWeather: false, showError: true });
 			} else {
-				console.log(response);
 				this.setState({
 					...this.state,
 					showWeather: response,
@@ -65,12 +56,17 @@ class App extends React.Component {
 
 	onFormSubmitHandler = (e) => {
 		e.preventDefault();
-		const searchedLocation = e.target.elements.location.value;
+		const searchedLocation = this.state.inputValue; // for uncontrolled form: const searchedLocation = e.target.elements.location.value;
 		// setState is an asynchronous action, so we need to include API call function as a second param callback to make sure it executes after state is uptated
 		this.setState({ ...this.state, weatherLocation: searchedLocation }, () => {
 			this.APICall();
 		});
 	};
+
+	onChangeHandler(e) {
+		const { value } = e.target;
+		this.setState({ ...this.state, inputValue: value });
+	}
 
 	render() {
 		return (
@@ -81,7 +77,11 @@ class App extends React.Component {
 				{this.state.showError && (
 					<ErrorMessage errorMessage={this.state.showError} />
 				)}
-				<SearchForm api_call={this.onFormSubmitHandler} />
+				<SearchForm
+					APICall={this.onFormSubmitHandler}
+					inputValue={this.state.inputValue}
+					onChangeHandler={this.onChangeHandler.bind(this)}
+				/>
 			</Container>
 		);
 	}

@@ -1,5 +1,10 @@
+import React from "react";
+
 const SearchForm = (props) => {
-	const request = props.api_call;
+	const request = props.APICall;
+	const inputValue = props.inputValue;
+	const onChangeHandler = props.onChangeHandler;
+
 	return (
 		<div className="search__wrapper">
 			<form onSubmit={request}>
@@ -9,6 +14,8 @@ const SearchForm = (props) => {
 					type="text"
 					id="city-search"
 					placeholder="Search for a city"
+					value={inputValue}
+					onChange={onChangeHandler}
 					autoFocus
 				/>
 				<button className="search__button">go→</button>
