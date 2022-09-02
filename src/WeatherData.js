@@ -19,31 +19,28 @@ class WeatherData extends React.Component {
 	render() {
 		const { name, main, weather, wind, sys } = this.props.weatherData;
 		return (
-			<div className="weather-data">
-				<div className="location">
-					<h1 className="location-timezone" id="city-name">
-						{name}, {sys.country}
-					</h1>
+			<div className="weather">
+				<h1 className="weather__location">
+					{name}, {sys.country}
+				</h1>
+				<img
+					src={require(`./weather_images/${weather[0].icon}.gif`)}
+					alt="{weather[0].description}"
+					className="weather__image"
+				/>
+				<h2 className="weather__temperature">{main.temp}°C</h2>
+				<div className="weather__description">{weather[0].description}</div>
+				<div class="weather__details">
+					<button
+						onClick={this.onClickHandler}
+						className="weather__details-button"
+					>
+						Details
+					</button>
+					{this.state.showWeatherDetails && (
+						<WeatherDetails main={main} wind={wind} />
+					)}
 				</div>
-				<img src={require(`./weather_images/${weather[0].icon}.gif`)} alt="" />
-				<div className="temperature">
-					<div className="degree-section">
-						<h2 className="temperature-degree">{main.temp}</h2>
-						<span>°C</span>
-					</div>
-					<div className="temperature-description">
-						{weather[0].description}
-					</div>
-				</div>
-				<button
-					onClick={this.onClickHandler}
-					className="weather-details-button"
-				>
-					Details
-				</button>
-				{this.state.showWeatherDetails && (
-					<WeatherDetails main={main} wind={wind} />
-				)}
 			</div>
 		);
 	}

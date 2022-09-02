@@ -4,7 +4,7 @@
 	src: url(/assets/ABCWhyteSemi-Mono-Regular.woff2) format("woff2");
 }
 @font-face {
-	font-family: "Whyte Inktrap";
+	font-family: "Whyte Inktrap Light";
 
 	src: url(/assets/ABCWhyteInktrapSemi-Mono-Regular.woff) format("woff");
 	src: url(/assets/ABCWhyteInktrapSemi-Mono-Regular.woff2) format("woff2");
@@ -21,6 +21,12 @@
 	src: url(/assets/ABCGalapagosA-Bold-Trial.woff2) format("woff2");
 }
 
+:root {
+	--accent: red;
+	--lilac: #c5c5ff;
+	--grey: rgb(183 183 183);
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -30,113 +36,128 @@
 body {
 	max-height: 100vh;
 	max-width: 100vw;
-	background: rgb(183 183 183);
-	color: red;
-	font-family: "Whyte";
-
-	display: flex;
-	justify-content: flex-start;
-	flex-direction: column;
-	align-items: center;
-}
-
-.weather-box {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-}
-
-.location,
-.temperature {
-	height: 8rem;
-	font-family: "Galapagos";
-	text-transform: uppercase;
-
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-}
-
-.temperature {
-	flex-direction: column;
-}
-
-.temperature-description {
-	font-family: "Whyte";
-	text-transform: lowercase;
-}
-
-.degree-section {
-	display: flex;
-	cursor: pointer;
-}
-
-.degree-section span {
-	margin: 10px;
-	font-size: 2rem;
-}
-
-.degree-section h2 {
-	font-size: 3rem;
-}
-
-.icon {
-	pointer-events: none;
-	display: none;
-}
-.icon img {
-	width: 15rem;
-}
-
-/* Submit Form */
-.search__wrapper {
-	width: 15rem;
+	padding-block: 20px;
+	background: var(--grey);
+	color: var(--accent);
+	font-family: "Whyte", sans-serif;
 }
 
 button {
 	cursor: pointer;
-	font-family: "Galapagos";
+	font-family: "Galapagos", monospace;
 	font-size: 2rem;
-	margin-left: 2px;
-}
-
-button {
-	border: 1px red solid;
-	padding: 12px 20px 6px 15px;
-	border-radius: 6px;
-}
-
-button,
-input {
-	flex: 1;
 	border: none;
 	background: none;
 	outline: none;
 	color: inherit;
-	margin: 10px 0;
 }
 
-input {
-	border: 1px solid red;
-	background-color: #c5c5ff !important;
+.container {
+	margin: 30px;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* Weather container */
+.weather {
+	position: relative;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+}
+
+.weather__image {
+	width: 200px;
+}
+
+.weather__location,
+.weather__temperature {
+	font-family: "Galapagos", monospace;
+	font-size: 3rem;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.weather__description {
+	font-family: "Whyte", sans-serif;
+	text-transform: lowercase;
+}
+
+.weather__details {
+	top: 58px;
+	right: -200px;
+	text-align: center;
+}
+
+.weather__details-info * {
+	font-size: 0.8rem;
+}
+
+/* Search form */
+.search__wrapper {
+	margin-top: 30px;
+	position: relative;
+}
+
+.search__input {
+	width: 300px;
+	border: 1px solid var(--accent);
+	background-color: var(--lilac);
 	padding: 0.6rem 0.2rem;
 }
 
+.search__input:focus,
+.search__input:focus-visible,
+.search__input:focus-within {
+	-webkit-box-shadow: 0px 0px 20px 2px rgb(255 255 255);
+	-moz-box-shadow: 0px 0px 20px 2px rgba(255, 255, 255, 1);
+	box-shadow: 0px 0px 20px 2px rgb(255 255 255);
+	outline: none;
+}
+
 .search__msg {
-	font-family: "Whyte";
+	font-family: "Whyte", sans-serif;
 	margin-top: 4rem;
 	display: inline-block;
 	width: 12rem;
 }
 
-@media (min-width: 600px) {
-	form {
-		width: 20rem;
-		display: flex;
+/* Mobile & smaller tablet */
+@media (max-width: 799px) {
+	.weather__details-info {
+		margin-left: 5px;
 	}
 
-	input {
-		width: 15rem;
+	form {
+		width: 200px;
+
+		display: flex;
+		gap: 10px;
+	}
+}
+
+/* Smaller tablet and bigger */
+@media (min-width: 800px) {
+	.weather__image {
+		width: 300px;
+	}
+
+	.weather__details {
+		position: absolute;
+		text-align: end;
+	}
+
+	.search__wrapper {
+		margin-top: 40px;
+		position: relative;
+	}
+
+	.search__button {
+		position: absolute;
+		margin-left: 15px;
 	}
 }

@@ -12,7 +12,6 @@ const SearchForm = (props) => {
 					className="search__input"
 					name="location" // We're giving a name to out input to later access its value via e.target.elements.location.value
 					type="text"
-					id="city-search"
 					placeholder="Search for a city"
 					value={inputValue}
 					onChange={onChangeHandler}

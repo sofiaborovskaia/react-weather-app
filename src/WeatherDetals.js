@@ -5,11 +5,11 @@ const WeatherDetails = (props) => {
 	const { speed } = props.wind;
 
 	return (
-		<div className="weather-details">
-			<p className="weather-detail">Humidity: {humidity}</p>
-			<p className="weather-detail">Max: {temp_max}</p>
-			<p className="weather-detail">Min: {temp_min}</p>
-			<p className="weather-detail">Wind: {speed} meter/sec</p>
+		<div className="weather__details-info">
+			<p className="weather-detail">Humidity: {humidity}%</p>
+			<p className="weather-detail">Max: {temp_max}°C</p>
+			<p className="weather-detail">Min: {temp_min}°C</p>
+			<p className="weather-detail">Wind: {speed} m/sec</p>
 		</div>
 	);
 };
