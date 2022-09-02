@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-weather-app/static/css/main.821d6921.css",
-    "main.js": "/react-weather-app/static/js/main.d10be141.js",
+    "main.css": "/react-weather-app/static/css/main.9e38949a.css",
+    "main.js": "/react-weather-app/static/js/main.710e27cd.js",
     "static/media/02n.gif": "/react-weather-app/static/media/02n.9262fc0bd387df51bc43.gif",
     "static/media/03n.gif": "/react-weather-app/static/media/03n.9262fc0bd387df51bc43.gif",
     "static/media/02d.gif": "/react-weather-app/static/media/02d.31ec095ba189015bccdc.gif",
@@ -28,11 +28,11 @@
     "static/media/ABCGalapagosA-Bold-Trial.woff": "/react-weather-app/static/media/ABCGalapagosA-Bold-Trial.77f975eb98580f27d565.woff",
     "static/media/ABCGalapagosA-Bold-Trial.woff2": "/react-weather-app/static/media/ABCGalapagosA-Bold-Trial.0f24370adb462268fbeb.woff2",
     "index.html": "/react-weather-app/index.html",
-    "main.821d6921.css.map": "/react-weather-app/static/css/main.821d6921.css.map",
-    "main.d10be141.js.map": "/react-weather-app/static/js/main.d10be141.js.map"
+    "main.9e38949a.css.map": "/react-weather-app/static/css/main.9e38949a.css.map",
+    "main.710e27cd.js.map": "/react-weather-app/static/js/main.710e27cd.js.map"
   },
   "entrypoints": [
-    "static/css/main.821d6921.css",
-    "static/js/main.d10be141.js"
+    "static/css/main.9e38949a.css",
+    "static/js/main.710e27cd.js"
   ]
 }
