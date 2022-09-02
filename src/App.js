@@ -14,11 +14,11 @@ class App extends React.Component {
 		inputValue: "",
 	};
 	debugger;
-	APICall = async () => {
+	apiCall = async () => {
 		try {
 			const apiKey = "b07ce01cf98a75428f9f86fbce911aa4";
-			const urlCity = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.weatherLocation}&appid=${apiKey}&units=metric`;
-			const request = await fetch(urlCity);
+			const urlLocation = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.weatherLocation}&appid=${apiKey}&units=metric`;
+			const request = await fetch(urlLocation);
 			const response = await request.json();
 			// Catches fetch errors
 			if (!request.ok) {
@@ -47,7 +47,7 @@ class App extends React.Component {
 				const response = await request.json();
 				const currentlocation = response[0].name;
 				this.setState({ ...this.state, weatherLocation: currentlocation });
-				this.APICall();
+				this.apiCall();
 			});
 		} else {
 			console.log("Geolocation is not supported in your browser");
@@ -59,7 +59,7 @@ class App extends React.Component {
 		const searchedLocation = this.state.inputValue; // for uncontrolled form: const searchedLocation = e.target.elements.location.value;
 		// setState is an asynchronous action, so we need to include API call function as a second param callback to make sure it executes after state is uptated
 		this.setState({ ...this.state, weatherLocation: searchedLocation }, () => {
-			this.APICall();
+			this.apiCall();
 		});
 	};
 
@@ -78,7 +78,7 @@ class App extends React.Component {
 					<ErrorMessage errorMessage={this.state.showError} />
 				)}
 				<SearchForm
-					APICall={this.onFormSubmitHandler}
+					apiCall={this.onFormSubmitHandler}
 					inputValue={this.state.inputValue}
 					onChangeHandler={this.onChangeHandler.bind(this)}
 				/>
