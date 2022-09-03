@@ -13,7 +13,7 @@ class App extends React.Component {
 		showError: false,
 		inputValue: "",
 	};
-	debugger;
+
 	apiCall = async () => {
 		try {
 			const apiKey = "b07ce01cf98a75428f9f86fbce911aa4";
@@ -42,12 +42,16 @@ class App extends React.Component {
 				const long = position.coords.longitude;
 				const lat = position.coords.latitude;
 				const apiKey = "b07ce01cf98a75428f9f86fbce911aa4";
-				const urlCurrentLocation = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&limit=1&appid=${apiKey}&units=metric`;
+				const urlCurrentLocation = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&limit=1&appid=${apiKey}&units=metric`;
 				const request = await fetch(urlCurrentLocation);
 				const response = await request.json();
 				const currentlocation = response[0].name;
-				this.setState({ ...this.state, weatherLocation: currentlocation });
-				this.apiCall();
+				this.setState(
+					{ ...this.state, weatherLocation: currentlocation },
+					() => {
+						this.apiCall();
+					},
+				);
 			});
 		} else {
 			console.log("Geolocation is not supported in your browser");

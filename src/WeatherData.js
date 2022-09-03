@@ -30,7 +30,7 @@ class WeatherData extends React.Component {
 				/>
 				<h2 className="weather__temperature">{main.temp}°C</h2>
 				<div className="weather__description">{weather[0].description}</div>
-				<div class="weather__details">
+				<div className="weather__details">
 					<button
 						onClick={this.onClickHandler}
 						className="weather__details-button"
