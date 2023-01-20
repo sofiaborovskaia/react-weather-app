@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import "./App.css";
 import WeatherData from "./WeatherData";
@@ -6,37 +6,29 @@ import SearchForm from "./SearchForm";
 import ErrorMessage from "./ErrorMessage";
 import Container from "./Container";
 
-class App extends React.Component {
-	state = {
-		weatherLocation: "",
-		showWeather: false,
-		showError: false,
-		inputValue: "",
+const App = () => {
+	const [weatherLocation, setWeatherLocation] = useState("");
+	const [showWeather, setShowWeather] = useState(false);
+	const [showError, setShowError] = useState(false);
+	const [inputValue, setInputValue] = useState("");
+
+	const onFormSubmitHandler = useCallback(
+		(e) => {
+			e.preventDefault();
+			const searchedLocation = inputValue; // for uncontrolled form: const searchedLocation = e.target.elements.location.value;
+			// setState is an asynchronous action, so we need to include API call function as a second param callback to make sure it executes after state is uptated
+			setWeatherLocation(searchedLocation);
+		},
+		[inputValue],
+	);
+
+	const onChangeHandler = (e) => {
+		const { value } = e.target;
+		setInputValue(value);
 	};
 
-	apiCall = async () => {
-		try {
-			const apiKey = "b07ce01cf98a75428f9f86fbce911aa4";
-			const urlLocation = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.weatherLocation}&appid=${apiKey}&units=metric`;
-			const request = await fetch(urlLocation);
-			const response = await request.json();
-			// Catches fetch errors
-			if (!request.ok) {
-				this.setState({ ...this.state, showWeather: false, showError: true });
-			} else {
-				this.setState({
-					...this.state,
-					showWeather: response,
-					showError: false,
-				});
-			}
-			// Catches network errors
-		} catch {
-			this.setState({ ...this.state, showWeather: false, showError: true });
-		}
-	};
-
-	componentDidMount() {
+	// Show current location on Load
+	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(async (position) => {
 				const long = position.coords.longitude;
@@ -46,49 +38,45 @@ class App extends React.Component {
 				const request = await fetch(urlCurrentLocation);
 				const response = await request.json();
 				const currentlocation = response[0].name;
-				this.setState(
-					{ ...this.state, weatherLocation: currentlocation },
-					() => {
-						this.apiCall();
-					},
-				);
+
+				setWeatherLocation(currentlocation);
 			});
 		} else {
 			console.log("Geolocation is not supported in your browser");
 		}
-	}
+	}, []);
 
-	onFormSubmitHandler = (e) => {
-		e.preventDefault();
-		const searchedLocation = this.state.inputValue; // for uncontrolled form: const searchedLocation = e.target.elements.location.value;
-		// setState is an asynchronous action, so we need to include API call function as a second param callback to make sure it executes after state is uptated
-		this.setState({ ...this.state, weatherLocation: searchedLocation }, () => {
-			this.apiCall();
-		});
-	};
+	useEffect(() => {
+		console.log(weatherLocation);
+		const apiCall = async () => {
+			console.log("yo!");
+			// don't forget to implement try and catch
+			const apiKey = "b07ce01cf98a75428f9f86fbce911aa4";
+			const urlLocation = `https://api.openweathermap.org/data/2.5/weather?q=${weatherLocation}&appid=${apiKey}&units=metric`;
+			const request = await fetch(urlLocation);
+			const response = await request.json();
+			if (!request.ok) {
+				setShowError(true);
+				setShowWeather(false);
+			} else {
+				setShowError(false);
+				setShowWeather(response);
+			}
+		};
+		apiCall();
+	}, [weatherLocation]);
 
-	onChangeHandler(e) {
-		const { value } = e.target;
-		this.setState({ ...this.state, inputValue: value });
-	}
-
-	render() {
-		return (
-			<Container>
-				{this.state.showWeather && (
-					<WeatherData weatherData={this.state.showWeather} />
-				)}
-				{this.state.showError && (
-					<ErrorMessage errorMessage={this.state.showError} />
-				)}
-				<SearchForm
-					apiCall={this.onFormSubmitHandler}
-					inputValue={this.state.inputValue}
-					onChangeHandler={this.onChangeHandler.bind(this)}
-				/>
-			</Container>
-		);
-	}
-}
+	return (
+		<Container>
+			{showWeather && <WeatherData weatherData={showWeather} />}
+			{showError && <ErrorMessage errorMessage={showError} />}
+			<SearchForm
+				apiCall={onFormSubmitHandler}
+				inputValue={inputValue}
+				onChangeHandler={onChangeHandler}
+			/>
+		</Container>
+	);
+};
 
 export default App;
